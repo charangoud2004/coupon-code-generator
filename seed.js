@@ -20,6 +20,7 @@ const seedDatabase = async () => {
       { code: "COUPON6", status: "Available" },
       { code: "COUPON7", status: "Available" },
       { code: "COUPON8", status: "Available" },
+      { code: "COUPON9", status: "Available" },
     ];
     await Coupon.insertMany(sampleCoupons);
     console.log(" Database seeded successfully");
