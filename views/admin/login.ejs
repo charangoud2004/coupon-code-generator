@@ -1,7 +1,7 @@
 <%- include('../layouts/boilerplate') %>
 
 <body class="d-flex flex-column min-vh-100">
-  <!-- Coupon Navbar (Main Navigation) -->
+  <!--Main Navigation-->
   <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">Coupon</a>
@@ -29,7 +29,7 @@
     </div>
   </nav>
 
-  <!-- Admin Panel Navbar (Below Coupon Navbar) -->
+  <!-- Admin Panel Navbar -->
   <nav
     class="navbar navbar-dark bg-dark fixed-top"
     style="margin-top: 56px; z-index: 1030"
@@ -39,10 +39,9 @@
     </div>
   </nav>
 
-  <!-- Add spacing below navbars to prevent content overlap -->
+  <!-- spacing between the two nav's-->
   <div class="mt-5"></div>
 
-  <!-- Login Form Container -->
   <div class="d-flex align-items-center justify-content-center flex-grow-1">
     <div
       class="card shadow-lg p-4"
@@ -78,7 +77,6 @@
   </div>
 
   <style>
-    /* Smooth fade-in animation for the login card */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -89,8 +87,6 @@
         transform: translateY(0);
       }
     }
-
-    /* Input field hover and focus animations */
     .animate-input {
       transition: all 0.3s ease-in-out;
     }
@@ -99,7 +95,6 @@
       box-shadow: 0 0 8px rgba(13, 110, 253, 0.4);
     }
 
-    /* Button hover effect */
     .animate-btn {
       transition: transform 0.2s ease-in-out, box-shadow 0.2s;
     }
