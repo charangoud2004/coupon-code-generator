@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const connectDB = require("./init/db");
 const Coupon = require("./models/Coupon");
 const abusePrevention = require("./utils/abusePrevention");
@@ -15,10 +16,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "your-secret-key",
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false },
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.ATLASDB_URL, 
+      collectionName: "sessions",
+    }),
+    cookie: { secure: false, httpOnly: true, maxAge: 86400000 }, 
   })
 );
 
