@@ -1,0 +1,96 @@
+<%- include('../layouts/boilerplate') %>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/admin/dashboard">Coupon Admin</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <h1>Admin Dashboard</h1>
+      <h2 class="mt-4">Add New Coupon</h2>
+      <form action="/admin/add-coupon" method="POST" class="mb-4">
+        <div class="mb-3">
+          <label for="code" class="form-label">Coupon Code</label>
+          <input
+            type="text"
+            class="form-control"
+            id="code"
+            name="code"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Coupon</button>
+      </form>
+
+      <h2>Coupons</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Claimed By</th>
+            <th>Claimed At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% coupons.forEach(coupon => { %>
+          <tr>
+            <td><%= coupon.code %></td>
+            <td><%= coupon.status %></td>
+            <td><%= coupon.claimedBy || 'N/A' %></td>
+            <td>
+              <%= coupon.claimedAt ? coupon.claimedAt.toLocaleString() : 'N/A' %>
+            </td>
+            <td>
+              <form action="/admin/toggle-coupon/<%= coupon._id %>" method="POST" style="display: inline">
+                <button
+                  type="submit"
+                  class="btn btn-sm <%= coupon.status === 'Available' ? 'btn-warning' : 'btn-success' %>">
+                  <%= coupon.status === 'Available' ? 'Disable' : 'Enable' %>
+                </button>
+              </form>
+              <form action="/admin/delete-coupon/<%= coupon._id %>" method="POST" style="display: inline" class="ms-2">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <% if (typeof currentPage !== 'undefined' && currentPage > 1) { %>
+          <li class="page-item">
+            <a class="page-link" href="/admin/dashboard?page=<%= currentPage - 1 %>">Previous</a>
+          </li>
+          <% } %>
+
+          <% for (let i = 1; i <= (typeof totalPages !== 'undefined' ? totalPages : 1); i++) { %>
+          <li class="page-item <%= typeof currentPage !== 'undefined' && i === currentPage ? 'active' : '' %>">
+            <a class="page-link" href="/admin/dashboard?page=<%= i %>"><%= i %></a>
+          </li>
+          <% } %>
+
+          <% if (typeof currentPage !== 'undefined' && currentPage < totalPages) { %>
+          <li class="page-item">
+            <a class="page-link" href="/admin/dashboard?page=<%= currentPage + 1 %>">Next</a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+
